@@ -1,0 +1,5 @@
+model,lambda,test_accuracy,sparsity_percent,test_accuracy_hard_pruned,size_mb_before,size_mb_after,hard_pruned_weights
+standard_cnn,0.0,67.0,0.0,67.0,4.084754943847656,4.084754943847656,
+prunable_cnn,1e-05,59.99,0.0,59.99,4.084754943847656,4.084754943847656,0
+prunable_cnn,0.0001,60.12,0.0,60.12,4.084754943847656,4.084754943847656,0
+prunable_cnn,0.001,56.18,0.0,56.18,4.084754943847656,4.084754943847656,0
