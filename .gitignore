@@ -13,7 +13,7 @@ venv/
 
 # Data and experiment artifacts
 data/
-outputs/
+# outputs/
 
 # IDE/editor
 .vscode/
