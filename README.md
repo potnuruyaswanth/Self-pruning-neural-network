@@ -7,9 +7,9 @@ A production-style PyTorch project where each weight has a learnable gate. The m
 
 Total loss:
 
-\[
+$$
 \mathcal{L}_{total} = \mathcal{L}_{CE} + \lambda \sum_i g_i
-\]
+$$
 
 ## Features
 
