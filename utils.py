@@ -34,6 +34,8 @@ def get_cifar10_dataloaders(
     num_workers: int,
     augment: bool = True,
 ) -> Tuple[DataLoader, DataLoader]:
+    use_pin_memory = torch.cuda.is_available()
+
     if augment:
         train_transform = transforms.Compose(
             [
@@ -74,14 +76,14 @@ def get_cifar10_dataloaders(
         batch_size=batch_size,
         shuffle=True,
         num_workers=num_workers,
-        pin_memory=True,
+        pin_memory=use_pin_memory,
     )
     test_loader = DataLoader(
         test_set,
         batch_size=batch_size,
         shuffle=False,
         num_workers=num_workers,
-        pin_memory=True,
+        pin_memory=use_pin_memory,
     )
 
     return train_loader, test_loader
@@ -200,11 +202,19 @@ def save_results_csv(results: List[Dict], path: str) -> None:
     if not results:
         return
 
-    keys = list(results[0].keys())
+    keys = []
+    seen = set()
+    for row in results:
+        for k in row.keys():
+            if k not in seen:
+                seen.add(k)
+                keys.append(k)
+
     with open(path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=keys)
         writer.writeheader()
-        writer.writerows(results)
+        for row in results:
+            writer.writerow({k: row.get(k, "") for k in keys})
 
 
 def plot_gate_histogram(
